@@ -1,5 +1,6 @@
 import unittest
 from src.model import DataBase
+import os
 
 
 class TestDataBase(unittest.TestCase):
@@ -26,7 +27,11 @@ class TestDataBase(unittest.TestCase):
         db = DataBase(int(0))
 
     def test_add_score(self):
-        db = DataBase()
+        # Delete file if exists
+        if os.path.exists("../data/test_add_score.json"):
+            os.remove("../data/test_add_score.json")
+
+        db = DataBase("../data/test_add_score.json")
         db.add_score(player="Biel", score=150)
         score_test_db = [{
             "name": "Biel",
@@ -44,4 +49,8 @@ class TestDataBase(unittest.TestCase):
             "score": 10
         }]
         self.assertEqual(db.get_db(), score_test_db)
+
+    def test_load_db(self):
+        db = DataBase()
+        # Acabar
 

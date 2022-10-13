@@ -8,8 +8,7 @@ class DataBase:
         self._db_path = data_base_path
 
         if exists(self._db_path):
-            with open(self._db_path) as json_file:
-                self._db_dict = json.load(json_file)
+            self._db_dict = self.load_db()
         else:
             self._db_dict = []
 
@@ -27,7 +26,16 @@ class DataBase:
         self._db_dict.append(new_score)
         self.update_db()
 
+    def save_game(self, game):
+        # Implementar
+        pass
+
     def update_db(self):
         json_object = json.dumps(self.get_db())
         with open(self.get_db_path(), "w") as outfile:
             outfile.write(json_object)
+
+    def load_db(self):
+        with open(self._db_path) as json_file:
+            db_dict = json.load(json_file)
+        return db_dict
