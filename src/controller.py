@@ -21,6 +21,10 @@ class Controller:
         self.gui.clear_frame()              # Clear GUI frame
         self.gui.test_display_card_deck()   # Call GUI Game
 
+    def call_exit(self):
+        self.gui.clear_frame()      # Clear GUI Frame
+        self.gui.destroy()          # Destroy Terminal
+
     def gui_refresh(self):
         self.gui.refresh()
 

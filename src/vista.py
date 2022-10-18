@@ -28,6 +28,8 @@ class Vista:
         start_game_button.pack()
         ranking_button = tk.Button(self.gui, text="Ranking", command=self.controller.call_ranking)
         ranking_button.pack()
+        exit_button = tk.Button(self.gui, text="Exit", command=self.controller.call_exit)
+        exit_button.pack()
 
     def ranking(self, data):
         for score in data:
@@ -46,6 +48,9 @@ class Vista:
         for widgets in self.gui.winfo_children():
             widgets.destroy()
 
+    def destroy(self):
+        self.gui.destroy()
+
 
 
 
@@ -61,3 +66,4 @@ class Vista:
 
         back_to_menu_button = tk.Button(self.gui, text="Back to Menu", command=self.controller.call_menu)
         back_to_menu_button.pack()
+    
