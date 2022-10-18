@@ -4,18 +4,18 @@ from vista import Vista
 
 class Controller:
     def __init__(self):
-        self.db = DataBase()        # Init Model DB
-        self.gui = Vista(self)      # Init Vista GUI
-        self.call_menu()                 # Launch menu
+        self.db = DataBase()                # Init Model DB
+        self.gui = Vista(self)              # Init Vista GUI
+        self.call_menu()                    # Launch menu
 
     def call_menu(self):
-        self.gui.clear_frame()          # Clear GUI frame
-        self.gui.menu()                 # Call GUI Menu
+        self.gui.clear_frame()              # Clear GUI frame
+        self.gui.menu()                     # Call GUI Menu
 
     def call_ranking(self):
-        self.gui.clear_frame()          # Clear GUI frame
-        score_data = self.db.get_db()   # Get Score Data
-        self.gui.ranking(score_data)    # Call GUI Ranking
+        self.gui.clear_frame()              # Clear GUI frame
+        score_data = self.db.get_db()       # Get Score Data
+        self.gui.ranking(score_data)        # Call GUI Ranking
 
     def call_game(self):
         self.gui.clear_frame()              # Clear GUI frame
