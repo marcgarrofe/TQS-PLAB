@@ -7,7 +7,7 @@ class Controller:
         # Init Model DB
         self.db = DataBase()
         # Init Vista
-        self.gui = Vista()
+        self.gui = Vista(self)
         # Launch menu
 
     def menu(self):
@@ -16,6 +16,15 @@ class Controller:
         # Get User response
         # Switch case vista to call = Ranking o Game
         pass
+
+    def call_ranking(self):
+        self.gui.clear_frame()          # Clear GUI frame
+        score_data = self.db.get_db()   # Get Score Data
+        self.gui.ranking(score_data)    # Call GUI Ranking
+
+    def call_game(self):
+        self.gui.clear_frame()              # Clear GUI frame
+        self.gui.test_display_card_deck()   # Call GUI Game
 
     def gui_refresh(self):
         self.gui.refresh()
