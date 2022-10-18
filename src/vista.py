@@ -1,16 +1,37 @@
 import tkinter as tk
 from PIL import Image, ImageTk
+import os
+
 
 WINDOW_SIZE = "1000x600"
 CARD_SIZE_X = 500
 CARD_SIZE_Y = 726
 IMG_RATIO_RESIZE = 5
 
-PATH_CARDS_IMG = "../images"
+PATH_CARDS_IMG = "../images/cards"
+
+LIST_SUITS = ['spades', 'diamonds', 'hearts', 'clubs']
+LIST_CARDS_NUMBERS = list(range(1, 14, 1))
 
 
 def get_deck_img(path_cards_img):
-    pass
+    # Create empty dict for storing the cards
+    dict_cards = dict.fromkeys(LIST_SUITS, dict())
+    for suit in LIST_SUITS:
+        dict_cards[suit] = dict.fromkeys(LIST_CARDS_NUMBERS, 0)
+
+    # Load cards PNG from disk
+    img_path_list = sorted(os.listdir(path_cards_img))
+    for img_path in img_path_list:
+        # Skip hidden files
+        if not img_path.startswith('.'):
+            number, _, suit = img_path.replace('.png', '').split('_')
+            relative_img_path = path_cards_img + "/" + img_path
+            img = Image.open(relative_img_path)
+            img = img.resize((int(CARD_SIZE_X / IMG_RATIO_RESIZE), int(CARD_SIZE_Y / IMG_RATIO_RESIZE)))
+            dict_cards[suit][int(number)] = img.copy()
+
+    return dict_cards
 
 
 class Vista:
@@ -56,7 +77,6 @@ class Vista:
 
 
     def test_display_card_deck(self):
-
         load = Image.open("../images/red_joker.png").resize((int(CARD_SIZE_X / IMG_RATIO_RESIZE),
                                                              int(CARD_SIZE_Y / IMG_RATIO_RESIZE)))
         render = ImageTk.PhotoImage(load)
