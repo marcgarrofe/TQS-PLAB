@@ -1,11 +1,4 @@
-from vista import get_deck_img
+from tkinter import Image
 
-"""
-PATH = "../images/cards"
-test = get_deck_img(PATH)
-print(test)
-"""
-
-from game import Game
-game = Game()
-print("End")
+im = Image.open("../images/empty_slot.png")
+print(im.mode)
