@@ -28,11 +28,6 @@ class Controller:
     def gui_refresh(self):
         self.gui.refresh()
 
-    def show_ranking(self):
-        # Get Model Ranking score
-        # Call Ranking Vista
-        pass
-
     def save_game(self):
         # Call Model save_game()
         pass

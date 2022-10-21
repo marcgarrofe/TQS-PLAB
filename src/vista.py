@@ -73,9 +73,6 @@ class Vista:
         self.gui.destroy()
 
 
-
-
-
     def test_display_card_deck(self):
         load = Image.open("../images/red_joker.png").resize((int(CARD_SIZE_X / IMG_RATIO_RESIZE),
                                                              int(CARD_SIZE_Y / IMG_RATIO_RESIZE)))

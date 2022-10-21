@@ -4,7 +4,9 @@ from os.path import exists
 
 class DataBase:
     def __init__(self, data_base_path="../data/score.json"):
-        assert(type(data_base_path) == str)
+        if type(data_base_path) != str:
+            raise TypeError("Path to DB must be String type")
+
         self._db_path = data_base_path
 
         if exists(self._db_path):
