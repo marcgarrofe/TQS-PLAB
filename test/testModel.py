@@ -22,9 +22,8 @@ class TestDataBase(unittest.TestCase):
         }]
         self.assertEqual(db.get_db(), score_test_db)
 
-    @unittest.expectedFailure
-    def test_init_failure(self):
-        db = DataBase(int(0))
+        with self.assertRaisesRegex(TypeError, "Path to DB must be String type"):
+            db = DataBase(int(0))
 
     def test_add_score(self):
         # Delete file if exists
