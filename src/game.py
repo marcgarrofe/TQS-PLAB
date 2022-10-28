@@ -235,6 +235,8 @@ class Game:
             return False
         # Pop last card from Draw Pile
         draw_card = self._draw_pile.pop(-1)
+        # Change card visible state
+        draw_card.set_card_visible()
         # Paste last card into the destination pile
         self._tableau_pile[destination_pile_number].append(draw_card)
         # Update visible state from Draw Pile last card
@@ -254,5 +256,15 @@ class Game:
         # Update visible state from Draw Pile last card
         if len(self._tableau_pile[origin_pile_number]) > 0:
             self._tableau_pile[origin_pile_number][-1].set_card_visible()
+
+        return True
+
+    def new_draw_card(self):
+        if len(self._draw_pile) <= 1:
+            return False
+        # Pop last card from draw pile
+        last_card = self._draw_pile.pop(-1)
+        # Insert at the beginning
+        self._draw_pile.insert(0, last_card)
 
         return True

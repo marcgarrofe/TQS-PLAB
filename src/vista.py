@@ -14,7 +14,6 @@ PATH_EMPTY_SLOT = "../images/empty_slot.jpeg"
 
 LIST_SUITS = ['spades', 'diamonds', 'hearts', 'clubs']
 LIST_CARDS_NUMBERS = list(range(1, 14, 1))
-
 CARD_POSITION = {
     "card_px": {
         "x": int(CARD_SIZE_X / IMG_RATIO_RESIZE),
@@ -24,16 +23,16 @@ CARD_POSITION = {
         "x": 5,
         "y": 10
     },
-    "goal_pile": {
-        "x": 200,
-        "y": 10,
-        "margin": 30
-    },
     "tableau_pile": {
         "x": 5,
         "y": 200,
         "x_margin": 20,
         "y_margin": 30
+    },
+    "goal_pile": {
+        "x": 5 + ((20 + int(CARD_SIZE_X / IMG_RATIO_RESIZE)) * 3),    # tableau[x] + ((tableau[x_margin] + card_px[x]) * 3)
+        "y": 10,
+        "margin": 20
     }
 }
 
@@ -100,18 +99,33 @@ class Vista:
         # Define window loop
         self.gui.update_idletasks()
         self.gui.update()
+        self.gui.mainloop()
+
+    def game_refresh(self, game):
+        self.clear_frame()
+        self.test_display_card_deck(game)
+        self.gui.update_idletasks()
+        self.gui.update()
 
     def clear_frame(self):
         for widgets in self.gui.winfo_children():
             widgets.destroy()
+
+    def get_window_coords(self):
+        #return self.gui.winfo_x(), self.gui.winfo_y()
+        return self.gui.winfo_rootx(), self.gui.winfo_rooty()
 
     def destroy(self):
         self.gui.destroy()
 
     def test_display_card_deck(self, game):
         # Print last card from Draw Pile
-        last_card = game.get_draw_pile()[-1]
-        last_card_render = self.card_img[last_card.get_suit()][last_card.get_number()]
+        if len(game.get_draw_pile()) > 0:
+            last_card = game.get_draw_pile()[-1]
+            last_card_render = self.card_img[last_card.get_suit()][last_card.get_number()]
+        else:
+            last_card_render = self.card_img["empty_slot"]
+
         img = tk.Label(self.gui, image=last_card_render)
         img.place(x=CARD_POSITION['draw_pile']["x"], y=CARD_POSITION['draw_pile']["y"])
 
@@ -141,6 +155,9 @@ class Vista:
             # If Pile is empty, show empty rectangle
             if len(pile) == 0:
                 card_render = self.card_img["empty_slot"]
+            else:
+                last_goal_card = goal_pile[pile_index][-1]
+                card_render = self.card_img[last_goal_card.get_suit()][last_goal_card.get_number()]
 
             img = tk.Label(self.gui, image=card_render)
             img.place(x=card_x_pos, y=card_y_pos)
