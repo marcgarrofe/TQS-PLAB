@@ -220,7 +220,8 @@ class Game:
         # Copy the origin cards
         list_cards = list(self._tableau_pile[origin_pile_number][origin_card_y:])
         # Delete cards from origin
-        for _ in range(abs(origin_card_y)): self._tableau_pile[origin_pile_number].pop(-1)
+        for _ in range(abs(origin_card_y)):
+            self._tableau_pile[origin_pile_number].pop(-1)
         # Copy origin Card/s into destination pile
         self._tableau_pile[destination_pile_number] += list_cards
         # Update visible state of the last card from origin pile (if exists)

@@ -14,13 +14,13 @@ class TestCard(unittest.TestCase):
         self.assertTrue(card.get_reveled_state())
 
         with self.assertRaisesRegex(ValueError, "Suit not correct"):
-            card = Card('spades2', 1)
+            _ = Card('spades2', 1)
         with self.assertRaisesRegex(ValueError, "Number not correct"):
-            card = Card('spades', -1)
+            _ = Card('spades', -1)
         with self.assertRaisesRegex(ValueError, "Number not correct"):
-            card = Card('spades', 14)
+            _ = Card('spades', 14)
         with self.assertRaisesRegex(ValueError, "Suit not correct"):
-            card = Card('.spades', 15)
+            _ = Card('.spades', 15)
 
     def test_equal(self):
         card_1 = Card('spades', 1)
