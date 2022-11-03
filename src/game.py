@@ -1,6 +1,5 @@
 import random
 import copy
-import json
 
 
 LIST_SUITS = ['spades', 'diamonds', 'hearts', 'clubs']
@@ -19,7 +18,7 @@ class Card:
             raise ValueError("Suit not correct")
 
         if type(number) != int:
-            raise TypeError("Only Int() type numbers are allowed")
+            raise TypeError("Only Int type numbers are allowed")
 
         if number < min(LIST_NUMBERS) or number > max(LIST_NUMBERS):
             raise ValueError("Number not correct")
@@ -128,15 +127,6 @@ class Game:
 
     def get_tableau_pile(self):
         return self._tableau_pile
-
-    def print_tableau_pile(self):
-        for index, pile in enumerate(self._tableau_pile):
-            print("::-> Pile " + str(index))
-            for card in pile:
-                if card.get_reveled_state() is True:
-                    print("[ X ] " + str(card.get_number()) + " of " + str(card.get_suit()))
-                else:
-                    print("[ O ] " + str(card.get_number()) + " of " + str(card.get_suit()))
 
     def check_valid_tableau_to_tableau(self, origin_pile_number, destination_pile_number, origin_card_y):
         # Check if destination pile is empty and origin card is not 'King'.
