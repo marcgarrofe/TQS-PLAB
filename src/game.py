@@ -1,5 +1,6 @@
 import random
 import copy
+import json
 
 
 LIST_SUITS = ['spades', 'diamonds', 'hearts', 'clubs']
@@ -56,20 +57,26 @@ class Card:
     def set_card_visible(self):
         self._reveled_card = True
 
+    def get_dict_card(self):
+        card_dict = {
+            'suit': self.get_suit(),
+            'number': self.get_number(),
+            'reveled_state': self.get_reveled_state()
+        }
+        return card_dict
+
 
 class Game:
-    def __init__(self, game=None, draw_pile=None, goal_pile=None, discard_pile=None, tableau_pile=None):
+    def __init__(self, game=None, draw_pile=None, goal_pile=None, tableau_pile=None):
         # Check if game copy is provided
         if game is not None:
             self._draw_pile = copy.deepcopy(game.get_draw_pile())
             self._goal_pile = copy.deepcopy(game.get_goal_pile())
-            self._discard_pile = copy.deepcopy(game.get_discard_pile())
             self._tableau_pile = copy.deepcopy(game.get_tableau_pile())
         # If not all the required pile values are provided. The Game starts in random state
-        elif draw_pile is None and goal_pile is None and discard_pile is None and tableau_pile is None:
+        elif draw_pile is None and goal_pile is None and tableau_pile is None:
             self._draw_pile = list()
             self._goal_pile = [[] for i in range(4)]
-            self._discard_pile = list()
             self._tableau_pile = [[] for i in range(7)]
 
             self.deck = list()
@@ -78,7 +85,6 @@ class Game:
         else:
             self._draw_pile = draw_pile.copy()
             self._goal_pile = goal_pile.copy()
-            self._discard_pile = discard_pile.copy()
             self._tableau_pile = tableau_pile.copy()
 
     def __deepcopy__(self, memodict={}):
@@ -90,8 +96,6 @@ class Game:
         if self._draw_pile != other.get_draw_pile():
             return False
         if self._goal_pile != other.get_goal_pile():
-            return False
-        if self._discard_pile != other.get_discard_pile():
             return False
         if self._tableau_pile != other.get_tableau_pile():
             return False
@@ -121,9 +125,6 @@ class Game:
 
     def get_goal_pile(self):
         return self._goal_pile
-
-    def get_discard_pile(self):
-        return self._discard_pile
 
     def get_tableau_pile(self):
         return self._tableau_pile
@@ -269,3 +270,38 @@ class Game:
         self._draw_pile.insert(0, last_card)
 
         return True
+
+
+def game_to_dict(game):
+    if type(game) != Game:
+        raise TypeError('Param game must be Class Game Type')
+
+    dict_game = dict()
+    list_draw_pile = list()
+    list_goal_pile = list()
+    list_tableau_pile = list()
+
+    for card in game.get_draw_pile():
+        list_draw_pile.append(card.get_dict_card())
+
+    for pile in game.get_goal_pile():
+        list_pile = list()
+        for card in pile:
+            list_pile.append(card.get_dict_card())
+        list_goal_pile.append(list_pile)
+
+    for pile in game.get_tableau_pile():
+        list_pile = list()
+        for card in pile:
+            list_pile.append(card.get_dict_card())
+        list_tableau_pile.append(list_pile)
+
+    dict_game['draw_pile'] = list_draw_pile
+    dict_game['goal_pile'] = list_goal_pile
+    dict_game['tableau_pile'] = list_tableau_pile
+
+    return dict_game
+
+
+def dict_to_game(game_dict):
+    pass

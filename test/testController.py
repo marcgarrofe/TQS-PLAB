@@ -83,3 +83,7 @@ class TestCheckGoalPosition(unittest.TestCase):
                                                CARD_POSITION['card_px']['x'],
                                              y=CARD_POSITION['goal_pile']['y']), [True, 1])
 
+
+class TestController(unittest.TestCase):
+    def test_init(self):
+        pass

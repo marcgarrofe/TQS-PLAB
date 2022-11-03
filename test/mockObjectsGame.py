@@ -6,7 +6,6 @@ from src.game import Card
 draw_pile = [Card('spades', 13), Card('clubs', 1), Card('diamonds', 2),
              Card('hearts', 13, visible=True)]
 goal_pile = [[Card('diamonds', 1, visible=True)], [], [], []]
-discard_pile = []
 tableau_pile = [[Card('diamonds', 7, visible=True)],
                 [Card('spades', 8), Card('spades', 6, visible=True)],
                 [Card('diamonds', 11, visible=True), Card('spades', 10, visible=True)],
@@ -15,7 +14,7 @@ tableau_pile = [[Card('diamonds', 7, visible=True)],
                 [Card('clubs', 13, visible=True)],
                 []]
 
-test_game_0 = Game(draw_pile=draw_pile, goal_pile=goal_pile, discard_pile=discard_pile, tableau_pile=tableau_pile)
+test_game_0 = Game(draw_pile=draw_pile, goal_pile=goal_pile, tableau_pile=tableau_pile)
 
 # Mock Game 1
 tableau_pile = [[Card('diamonds', 9, visible=False), Card('spades', 8, visible=True),
@@ -28,7 +27,7 @@ tableau_pile = [[Card('diamonds', 9, visible=False), Card('spades', 8, visible=T
                 []]
 
 test_game_1 = Game(draw_pile=[Card('spades', 8, visible=True)],
-                   goal_pile=[], discard_pile=[], tableau_pile=tableau_pile)
+                   goal_pile=[], tableau_pile=tableau_pile)
 
 # Mock Game 2
 tableau_pile = [[Card('diamonds', 2, visible=True)],
@@ -41,9 +40,21 @@ tableau_pile = [[Card('diamonds', 2, visible=True)],
 
 test_game_2 = Game(draw_pile=[],
                    goal_pile=[[Card('diamonds', 1, visible=True)], [Card('clubs', 1, visible=True)], [], []],
-                   discard_pile=[], tableau_pile=tableau_pile)
+                   tableau_pile=tableau_pile)
 
+# Mock Game 3
+tableau_pile = [[],
+                [],
+                [Card('spades', 1, visible=True)],
+                [Card('hearts', 3, visible=True), Card('clubs', 2, visible=True)],
+                [],
+                [],
+                []]
+test_game_3 = Game(draw_pile=[],
+                   goal_pile=[[Card('diamonds', 1, visible=True)], [Card('clubs', 1, visible=True)], [], []],
+                   tableau_pile=tableau_pile)
 
 mock_game_list = [test_game_0,
                   test_game_1,
-                  test_game_2]
+                  test_game_2,
+                  test_game_3]

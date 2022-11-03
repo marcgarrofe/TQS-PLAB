@@ -1,6 +1,7 @@
 import unittest
 from src.game import Game
 from src.game import Card
+from src.game import game_to_dict
 from test.mockObjectsGame import mock_game_list
 
 
@@ -35,6 +36,16 @@ class TestCard(unittest.TestCase):
         card_4 = Card('spades', 1, visible=True)
         self.assertNotEqual(card_1, card_4)
 
+    def test_get_json_card(self):
+        card_1 = Card('spades', 1)
+        self.assertEqual(card_1.get_dict_card(), {'suit': 'spades',
+                                                  'number': 1,
+                                                  'reveled_state': False})
+        card_1.set_card_visible()
+        self.assertEqual(card_1.get_dict_card(), {'suit': 'spades',
+                                                  'number': 1,
+                                                  'reveled_state': True})
+
 
 class TestGame(unittest.TestCase):
     def test_default_init(self):
@@ -51,9 +62,6 @@ class TestGame(unittest.TestCase):
         draw_pile = game.get_draw_pile()
         self.assertEqual(len(draw_pile), 24)            # Check number of Cards in the Draw Pile
 
-        discard_pile = game.get_discard_pile()
-        self.assertEqual(len(discard_pile), 0)          # Check number of Cards in the Discard Pile
-
         goal_pile = game.get_goal_pile()
         self.assertEqual(len(goal_pile), 4)             # Check number of Piles in the Goal Pile
 
@@ -65,16 +73,14 @@ class TestGame(unittest.TestCase):
     def test_parameters_init(self):
         draw_pile = [Card('spades', 13), Card('clubs', 1)]
         goal_pile = [[Card('diamonds', 1, visible=True)], [Card('hearts', 1, visible=True)], [], []]
-        discard_pile = [Card('clubs', 12)]
         tableau_pile = [[Card('diamonds', 7, visible=True)],
                         [Card('spades', 4), Card('spades', 6, visible=False)],
                         [Card('diamonds', 11)], [], [], [], []]
 
-        game = Game(draw_pile=draw_pile, goal_pile=goal_pile, discard_pile=discard_pile, tableau_pile=tableau_pile)
+        game = Game(draw_pile=draw_pile, goal_pile=goal_pile, tableau_pile=tableau_pile)
 
         self.assertEqual(game.get_draw_pile(), draw_pile)
         self.assertEqual(game.get_goal_pile(), goal_pile)
-        self.assertEqual(game.get_discard_pile(), discard_pile)
         self.assertEqual(game.get_tableau_pile(), tableau_pile)
 
     def test_copy_init(self):
@@ -262,3 +268,32 @@ class TestGame(unittest.TestCase):
                           [Card('hearts', 3, visible=True),
                            Card('hearts', 2, visible=True)],
                           [], [], []])
+
+
+class TestGameToJson(unittest.TestCase):
+    def test_game_to_dict(self):
+        with self.assertRaisesRegex(TypeError, "Param game must be Class Game Type"):
+            _ = game_to_dict(int(0))
+
+        game = Game(game=mock_game_list[2])
+        result_dict = game_to_dict(game)
+        expected_dict = {
+            'draw_pile': [],
+            'goal_pile': [
+                    [{'suit': 'diamonds', 'number': 1, 'reveled_state': True}],
+                    [{'suit': 'clubs', 'number': 1, 'reveled_state': True}],
+                    [],
+                    []
+            ],
+            'tableau_pile': [
+                [{'suit': 'diamonds', 'number': 2, 'reveled_state': True}],
+                [{'suit': 'diamonds', 'number': 3, 'reveled_state': True}],
+                [{'suit': 'spades', 'number': 1, 'reveled_state': True}],
+                [{'suit': 'hearts', 'number': 3, 'reveled_state': True},
+                    {'suit': 'hearts', 'number': 2, 'reveled_state': True}],
+                [],
+                [],
+                []
+            ]
+        }
+        self.assertEqual(result_dict, expected_dict)
