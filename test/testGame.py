@@ -1,7 +1,7 @@
 import unittest
 from src.game import Game
 from src.game import Card
-from mockObjectsGame import mock_game_list
+from test.mockObjectsGame import mock_game_list
 
 
 class TestCard(unittest.TestCase):

@@ -1,11 +1,14 @@
 import json
-from os.path import exists
+from os.path import exists, dirname, join
+
+DIRNAME = dirname(__file__)
 
 
 class DataBase:
     def __init__(self, data_base_path="../data/score.json"):
         if type(data_base_path) != str:
             raise TypeError("Path to DB must be String type")
+        data_base_path = join(DIRNAME, data_base_path)
 
         self._db_path = data_base_path
 
