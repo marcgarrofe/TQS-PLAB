@@ -97,6 +97,38 @@ class TestDataBase(unittest.TestCase):
             [], [], []
         ])
 
+        # Test Error Values
+        # Drop Tableau Key in Dict
+        del game_dict_2['tableau_pile']
+        with self.assertRaisesRegex(ValueError, 'Tableau Pile not in dictionary'):
+            db_game.save_game(game_dict_2)
+        # Drop Goal Key in Dict
+        del game_dict_2['goal_pile']
+        with self.assertRaisesRegex(ValueError, 'Goal Pile not in dictionary'):
+            db_game.save_game(game_dict_2)
+        # Drop Draw Key in Dict
+        del game_dict_2['draw_pile']
+        with self.assertRaisesRegex(ValueError, 'Draw Pile not in dictionary'):
+            db_game.save_game(game_dict_2)
+
+        # Test a Game Saving
+        game = Game(game=mock_game_list[4])
+        game_dict = game_to_dict(game)
+        db_game.save_game(game_dict)
+
     def test_load_db(self):
         db = DataBase()
         # Acabar
+
+
+class MockDataBaseScore(DataBase):
+    def __init__(self):
+        self._db_path = '../data/score.json'
+        self._db_type = 'Score'
+        self._db_dict = [{
+            "name": "Biel",
+            "score": 150
+        }, {
+            "name": "Marc",
+            "score": 10
+        }]

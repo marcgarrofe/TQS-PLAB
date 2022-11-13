@@ -20,7 +20,7 @@ test_game_0 = Game(draw_pile=draw_pile, goal_pile=goal_pile, tableau_pile=tablea
 tableau_pile = [[Card('diamonds', 9, visible=False), Card('spades', 8, visible=True),
                  Card('diamonds', 7, visible=True), Card('spades', 6, visible=True)],
                 [Card('spades', 10, visible=True)],
-                [Card('hearts', 10, visible=False)],
+                [Card('hearts', 10, visible=True)],
                 [Card('hearts', 9, visible=True)],
                 [Card('spades', 9, visible=True)],
                 [],
@@ -54,7 +54,18 @@ test_game_3 = Game(draw_pile=[],
                    goal_pile=[[Card('diamonds', 1, visible=True)], [Card('clubs', 1, visible=True)], [], []],
                    tableau_pile=tableau_pile)
 
+# Mock Game 4
+tableau_pile = [[], [],
+                [Card('spades', 1, visible=True)],
+                [Card('clubs', 2, visible=True)],
+                [], [], []]
+test_game_4 = Game(draw_pile=[],
+                   goal_pile=[[Card('diamonds', 1, visible=True)], [Card('clubs', 1, visible=True)], [], []],
+                   tableau_pile=tableau_pile)
+
+
 mock_game_list = [test_game_0,
                   test_game_1,
                   test_game_2,
-                  test_game_3]
+                  test_game_3,
+                  test_game_4]

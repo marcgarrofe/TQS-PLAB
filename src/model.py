@@ -6,14 +6,17 @@ DIRNAME = dirname(__file__)
 
 class DataBase:
     def __init__(self, data_base_type='score', data_base_path="../data/score.json"):
+        if data_base_type not in ['score', 'game']:
+            raise ValueError("Data base type allowed: score and game")
+        self._db_type = data_base_type
+
+        if data_base_path == "../data/score.json" and data_base_type == 'game':
+            data_base_path = "../data/game.json"
+
         if type(data_base_path) != str:
             raise TypeError("Path to DB must be String type")
         data_base_path = join(DIRNAME, data_base_path)
         self._db_path = data_base_path
-
-        if data_base_type not in ['score', 'game']:
-            raise ValueError("Data base type allowed: score and game")
-        self._db_type = data_base_type
 
         if exists(self._db_path):
             self._db_dict = self.load_db()
@@ -42,11 +45,11 @@ class DataBase:
             raise TypeError('Only Game type DB can add new scores')
         if type(game_dict) != dict:
             raise TypeError('Game must be provided in python dictionary type')
-        if 'draw_pile' not in game_dict.keys:
+        if 'draw_pile' not in game_dict.keys():
             raise ValueError('Draw Pile not in dictionary')
-        if 'goal_pile' not in game_dict.keys:
+        if 'goal_pile' not in game_dict.keys():
             raise ValueError('Goal Pile not in dictionary')
-        if 'tableau_pile' not in game_dict.keys:
+        if 'tableau_pile' not in game_dict.keys():
             raise ValueError('Tableau Pile not in dictionary')
 
         self._db_dict = game_dict

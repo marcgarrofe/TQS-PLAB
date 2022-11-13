@@ -118,6 +118,10 @@ class TestGame(unittest.TestCase):
         game = Game(game=mock_game_list[1])
         self.assertFalse(game.check_valid_tableau_to_tableau(0, 1, -4))
         self.assertTrue(game.check_valid_tableau_to_tableau(0, 3, -3))
+        # Move '10 of hearts' to '10 of spades'
+        self.assertFalse(game.check_valid_tableau_to_tableau(2, 1, 0))
+        # Move '9 of spades' to '10 of spades'
+        self.assertFalse(game.check_valid_tableau_to_tableau(4, 1, 0))
 
     def test_check_valid_draw_to_tableau(self):
         game = Game(game=mock_game_list[0])
@@ -135,6 +139,10 @@ class TestGame(unittest.TestCase):
         self.assertFalse(game.check_valid_draw_to_tableau(4))
         # Move '8 of spades' to 'an empty space
         self.assertFalse(game.check_valid_draw_to_tableau(6))
+
+        game = Game(game=mock_game_list[2])
+        # Move empty Draw pile to Tableau
+        self.assertFalse(game.check_valid_draw_to_tableau(0))
 
     def test_check_valid_tableau_to_goal(self):
         game = Game(game=mock_game_list[2])
@@ -282,6 +290,19 @@ class TestGame(unittest.TestCase):
                           [],
                           [Card('hearts', 3, visible=True),
                            Card('hearts', 2, visible=True)],
+                          [], [], []])
+
+        # Move '2 of clubs' to '1 of clubs'
+        game = Game(game=mock_game_list[3])
+        self.assertTrue(game.move_card_tableau_to_goal(3, 1))
+        self.assertEqual(game.get_goal_pile(),              # Check goal pile
+                         [[Card('diamonds', 1, visible=True)],
+                          [Card('clubs', 1, visible=True), Card('clubs', 2, visible=True)],
+                          [], []])
+        self.assertEqual(game.get_tableau_pile(),
+                         [[], [],
+                          [Card('spades', 1, visible=True)],
+                          [Card('hearts', 3, visible=True)],
                           [], [], []])
 
     def test_new_draw_card(self):

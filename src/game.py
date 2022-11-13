@@ -86,6 +86,8 @@ class Game:
             self._goal_pile = goal_pile.copy()
             self._tableau_pile = tableau_pile.copy()
 
+        self.num_movements = 0          # Init score num of movements
+
     def __deepcopy__(self, memodict={}):
         return Game(game=self)
 
@@ -218,6 +220,8 @@ class Game:
         # Update visible state of the last card from origin pile (if exists)
         if len(self._tableau_pile[origin_pile_number]) > 0:
             self._tableau_pile[origin_pile_number][-1].set_card_visible()
+        # Increment num of movements
+        self.num_movements += 1
 
         return True
 
@@ -234,6 +238,8 @@ class Game:
         # Update visible state from Draw Pile last card
         if len(self._draw_pile) > 0:
             self._draw_pile[-1].set_card_visible()
+        # Increment num of movements
+        self.num_movements += 1
 
         return True
 
@@ -248,6 +254,8 @@ class Game:
         # Update visible state from Draw Pile last card
         if len(self._tableau_pile[origin_pile_number]) > 0:
             self._tableau_pile[origin_pile_number][-1].set_card_visible()
+        # Increment num of movements
+        self.num_movements += 1
 
         return True
 
@@ -258,6 +266,8 @@ class Game:
         last_card = self._draw_pile.pop(-1)
         # Insert at the beginning
         self._draw_pile.insert(0, last_card)
+        # Increment num of movements
+        self.num_movements += 1
 
         return True
 

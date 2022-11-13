@@ -100,8 +100,8 @@ class Controller:
         self.run_game()
 
     def call_exit(self):
-        self.gui.clear_frame()      # Clear GUI Frame
-        self.gui.destroy()          # Destroy Terminal
+        self.gui.clear_frame()              # Clear GUI Frame
+        self.gui.destroy()                  # Destroy Terminal
 
     def gui_refresh(self, game=False):
         if not game:
@@ -118,11 +118,12 @@ class Controller:
         # Call model add_Score()
         pass
 
-    def on_click(self, x, y, button, pressed):
+    def on_click(self, x, y, button, pressed, verbose=False):
         if button == button.left:
-            print('{0} at {1}'.format(
-                'Pressed' if pressed else 'Released',
-                (x, y)))
+            if verbose:
+                print('{0} at {1}'.format(
+                    'Pressed' if pressed else 'Released',
+                    (x, y)))
             if pressed:
                 self.mouse_state_pressed = {"x": int(x), "y": int(y)}
             else:

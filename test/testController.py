@@ -87,3 +87,6 @@ class TestCheckGoalPosition(unittest.TestCase):
 class TestController(unittest.TestCase):
     def test_init(self):
         pass
+
+    def test_add_score(self):
+        pass
