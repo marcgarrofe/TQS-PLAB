@@ -304,4 +304,34 @@ def game_to_dict(game):
 
 
 def dict_to_game(game_dict):
-    pass
+    if type(game_dict) != dict:
+        raise TypeError('Param game must be Dict Type')
+    if 'draw_pile' not in game_dict.keys():
+        raise ValueError('Draw Pile not in dictionary')
+    if 'goal_pile' not in game_dict.keys():
+        raise ValueError('Goal Pile not in dictionary')
+    if 'tableau_pile' not in game_dict.keys():
+        raise ValueError('Tableau Pile not in dictionary')
+
+    list_draw_pile = list()
+    list_goal_pile = list()
+    list_tableau_pile = list()
+
+    for card in game_dict['draw_pile']:
+        list_draw_pile.append(Card(suit=card['suit'], number=card['number'], visible=card['reveled_state']))
+
+    for pile in game_dict['goal_pile']:
+        list_pile = list()
+        for card in pile:
+            list_pile.append(Card(suit=card['suit'], number=card['number'], visible=card['reveled_state']))
+        list_goal_pile.append(list_pile)
+
+    for pile in game_dict['tableau_pile']:
+        list_pile = list()
+        for card in pile:
+            list_pile.append(Card(suit=card['suit'], number=card['number'], visible=card['reveled_state']))
+        list_tableau_pile.append(list_pile)
+
+    return Game(draw_pile=list_draw_pile,
+                goal_pile=list_goal_pile,
+                tableau_pile=list_tableau_pile)

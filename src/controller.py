@@ -1,6 +1,6 @@
 from src.model import DataBase
 from src.vista import Vista, CARD_POSITION
-from src.game import Game
+from src.game import Game, game_to_dict, dict_to_game
 from pynput import mouse
 
 WINDOWS = ['menu', 'ranking', 'game']
@@ -63,16 +63,16 @@ def check_tableau_position(x, y, tableau):
         absolute_y_pos = y - CARD_POSITION['tableau_pile']['y']
         row_pile = int(absolute_y_pos / CARD_POSITION['tableau_pile']['y_margin'])
         row_pile = row_pile - len(tableau[pile_number])
-    # print((pile_number, row_pile))
     return [True, pile_number, row_pile]
 
 
 class Controller:
     def __init__(self):
         self.db = DataBase()                # Init Model DB
+        self.db_game = DataBase(data_base_type='game', data_base_path="../data/game.json")       # Init Model Game DB
         self.gui = Vista(self)              # Init Vista GUI
         self.window = None                  # Declare Window type
-        self.game = None                    # Declare Game
+        self.game = Game()                  # Declare Game
         self.mouse = mouse.Controller()     # Declare mouse controller
         self.mouse_state_pressed = None
         self.mouse_state_released = None
@@ -93,11 +93,14 @@ class Controller:
 
     def call_game(self):
         self.gui.clear_frame()              # Clear GUI frame
-        self.game = Game()                  # Declare Random Game
         #self.gui.test_display_card_deck(self.game)   # Call GUI Game
         self.gui.game_refresh(game=self.game)
         self.window = 'game'
         self.run_game()
+
+    def load_game(self):
+        saved_game_dict = self.db_game.get_db()
+        self.game = dict_to_game(saved_game_dict)
 
     def call_exit(self):
         self.gui.clear_frame()              # Clear GUI Frame
@@ -110,8 +113,8 @@ class Controller:
             self.gui.game_refresh()
 
     def save_game(self):
-        # Call Model save_game()
-        pass
+        game_dict = game_to_dict(self.game)
+        self.db_game.save_game(game_dict)
 
     def add_score(self):
         # Call Vista : Ask for players name
@@ -189,6 +192,14 @@ class Controller:
 
                     result_ok = self.game.move_card_tableau_to_goal(origin_pile, destination_pile)
 
+                # If Back To Menu is pressed, break the loop
+                elif 880 < destination_x < 990 and 10 < destination_y < 30:
+                    break
+
+                # If Save Game is pressed, call Model Save game function
+                elif 880 < destination_x < 990 and 40 < destination_y < 60:
+                    self.save_game()
+
                 if result_ok:
                     print("Card moved")
                     self.gui.game_refresh(self.game)
@@ -198,3 +209,5 @@ class Controller:
                 # Reset mouse state
                 self.mouse_state_released = None
                 self.mouse_state_pressed = None
+
+        self.call_menu()

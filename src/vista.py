@@ -82,16 +82,16 @@ class Vista:
         self.clear_frame()
         start_game_button = tk.Button(self.gui, text="Start Game", fg='red', bg='black', command=self.controller.call_game)
         start_game_button.pack()
-        start_game_button.place(x=482,y=190)
+        start_game_button.place(x=482, y=190)
         ranking_button = tk.Button(self.gui, text="Ranking", fg='red', bg='black', command=self.controller.call_ranking)
         ranking_button.pack
-        ranking_button.place(x=490,y=235)
-        load_button = tk.Button(self.gui, text="Load Game", fg='red', bg='black')
+        ranking_button.place(x=490, y=235)
+        load_button = tk.Button(self.gui, text="Load Game", fg='red', bg='black', command=self.controller.load_game)
         load_button.pack
         load_button.place(x=480, y=280)
         exit_button = tk.Button(self.gui, text="Exit", fg='red', bg='black', command=self.controller.call_exit)
         exit_button.pack
-        exit_button.place(x=500,y=325)
+        exit_button.place(x=500, y=325)
 
     def ranking(self, data):
         for score in data:
@@ -120,7 +120,6 @@ class Vista:
             widgets.destroy()
 
     def get_window_coords(self):
-        #return self.gui.winfo_x(), self.gui.winfo_y()
         return self.gui.winfo_rootx(), self.gui.winfo_rooty()
 
     def destroy(self):
@@ -176,4 +175,4 @@ class Vista:
 
         save_button = tk.Button(self.gui, text="Save Game", fg='red', bg='black')
         save_button.pack
-        save_button.place(x=880,y=40)
+        save_button.place(x=880, y=40)
