@@ -80,28 +80,39 @@ class Vista:
 
     def menu(self):
         self.clear_frame()
-        start_game_button = tk.Button(self.gui, text="Start Game", fg='red', bg='black', command=self.controller.call_game)
+
+        start_game_button = tk.Button(self.gui, text="Start Game", fg='red', bg='black', font=("Arial", 25),
+                                      command=self.controller.call_game)
         start_game_button.pack()
-        start_game_button.place(x=482, y=190)
-        ranking_button = tk.Button(self.gui, text="Ranking", fg='red', bg='black', command=self.controller.call_ranking)
-        ranking_button.pack
-        ranking_button.place(x=490, y=235)
-        load_button = tk.Button(self.gui, text="Load Game", fg='red', bg='black', command=self.controller.load_game)
-        load_button.pack
-        load_button.place(x=480, y=280)
-        exit_button = tk.Button(self.gui, text="Exit", fg='red', bg='black', command=self.controller.call_exit)
-        exit_button.pack
-        exit_button.place(x=500, y=325)
+        start_game_button.place(x=415, y=50)
+
+        ranking_button = tk.Button(self.gui, text="Ranking", fg='red', bg='black', font=("Arial", 25),
+                                   command=self.controller.call_ranking)
+        ranking_button.place(x=435, y=160)
+
+        easy_game_button = tk.Button(self.gui, text="Easy Game", fg='red', bg='black', font=("Arial", 25))
+        easy_game_button.place(x=410, y=270)
+
+        load_button = tk.Button(self.gui, text="Load Game", fg='red', bg='black', font=("Arial", 25), command=self.controller.load_game)
+        load_button.place(x=410, y=380)
+
+        exit_button = tk.Button(self.gui, text="Exit", fg='red', bg='black', font=("Arial", 25),
+                                command=self.controller.call_exit)
+        exit_button.place(x=465, y=490)
 
     def ranking(self, data):
         for score in data:
-            label_name = tk.Label(self.gui, text=score['name'])
-            label_score = tk.Label(self.gui, text=score['score'])
+            label_name = tk.Label(self.gui, text=score['name'], font=("Arial", 15))
+            label_score = tk.Label(self.gui, text=score['score'], font=("Arial", 20))
             label_name.pack()
             label_score.pack()
+            # label_name = tk.Label(self.gui, text=score['name'], font=("Arial", 15)).grid(row=0, column=0)
+            # label_score = tk.Label(self.gui, text=score['score'], font=("Arial", 20)).grid(row=0, column=1)
 
-        back_to_menu_button = tk.Button(self.gui, text="Back to Menu", fg='red', bg='black', command=self.controller.call_menu)
+        back_to_menu_button = tk.Button(self.gui, text="Back to Menu", fg='red', bg='black', font=("Arial", 25),
+                                        command=self.controller.call_menu)
         back_to_menu_button.pack()
+        back_to_menu_button.place(x=755, y=510)
 
     def refresh(self):
         # Define window loop
@@ -169,10 +180,13 @@ class Vista:
             img = tk.Label(self.gui, image=card_render)
             img.place(x=card_x_pos, y=card_y_pos)
 
-        back_to_menu_button = tk.Button(self.gui, text="Back to Menu", fg='red', bg='black', command=self.controller.call_menu)
-        back_to_menu_button.pack()
-        back_to_menu_button.place(x=880, y=10)
+        restart_game_button = tk.Button(self.gui, text="Restart Game", fg='red', bg='black', font=("Arial", 15))
+        restart_game_button.place(x=850, y=10)
 
-        save_button = tk.Button(self.gui, text="Save Game", fg='red', bg='black')
-        save_button.pack
-        save_button.place(x=880, y=40)
+        save_button = tk.Button(self.gui, text="Save Game", fg='red', bg='black', font=("Arial", 15))
+        save_button.place(x=850, y=60)
+
+        back_to_menu_button = tk.Button(self.gui, text="Back to Menu", fg='red', bg='black', font=("Arial", 15),
+                                        command=self.controller.call_menu)
+        back_to_menu_button.pack()
+        back_to_menu_button.place(x=850, y=525)
