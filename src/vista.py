@@ -80,19 +80,27 @@ class Vista:
 
     def menu(self):
         self.clear_frame()
-        start_game_button = tk.Button(self.gui, text="Start Game", command=self.controller.call_game)
+        start_game_button = tk.Button(self.gui, text="Start Game", fg='red', bg='black', command=self.controller.call_game)
         start_game_button.pack()
-        ranking_button = tk.Button(self.gui, text="Ranking", command=self.controller.call_ranking)
-        ranking_button.pack()
-        exit_button = tk.Button(self.gui, text="Exit", command=self.controller.call_exit)
-        exit_button.pack()
+        start_game_button.place(x=482,y=190)
+        ranking_button = tk.Button(self.gui, text="Ranking", fg='red', bg='black', command=self.controller.call_ranking)
+        ranking_button.pack
+        ranking_button.place(x=490,y=235)
+        load_button = tk.Button(self.gui, text="Load Game", fg='red', bg='black')
+        load_button.pack
+        load_button.place(x=480, y=280)
+        exit_button = tk.Button(self.gui, text="Exit", fg='red', bg='black', command=self.controller.call_exit)
+        exit_button.pack
+        exit_button.place(x=500,y=325)
 
     def ranking(self, data):
         for score in data:
-            label = tk.Label(self.gui, text=score['name'])
-            label.pack()
+            label_name = tk.Label(self.gui, text=score['name'])
+            label_score = tk.Label(self.gui, text=score['score'])
+            label_name.pack()
+            label_score.pack()
 
-        back_to_menu_button = tk.Button(self.gui, text="Back to Menu", command=self.controller.call_menu)
+        back_to_menu_button = tk.Button(self.gui, text="Back to Menu", fg='red', bg='black', command=self.controller.call_menu)
         back_to_menu_button.pack()
 
     def refresh(self):
@@ -162,5 +170,10 @@ class Vista:
             img = tk.Label(self.gui, image=card_render)
             img.place(x=card_x_pos, y=card_y_pos)
 
-        back_to_menu_button = tk.Button(self.gui, text="Back to Menu", command=self.controller.call_menu)
+        back_to_menu_button = tk.Button(self.gui, text="Back to Menu", fg='red', bg='black', command=self.controller.call_menu)
         back_to_menu_button.pack()
+        back_to_menu_button.place(x=880, y=10)
+
+        save_button = tk.Button(self.gui, text="Save Game", fg='red', bg='black')
+        save_button.pack
+        save_button.place(x=880,y=40)
