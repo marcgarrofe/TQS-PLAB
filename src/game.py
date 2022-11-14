@@ -1,7 +1,6 @@
 import random
 import copy
 
-
 LIST_SUITS = ['spades', 'diamonds', 'hearts', 'clubs']
 LIST_NUMBERS = list(range(1, 14, 1))
 COLOR_DICT = {
@@ -86,7 +85,7 @@ class Game:
             self._goal_pile = goal_pile.copy()
             self._tableau_pile = tableau_pile.copy()
 
-        self.num_movements = 0          # Init score num of movements
+        self.num_movements = 0  # Init score num of movements
 
     def __eq__(self, other):
         if not isinstance(other, Game):
@@ -106,8 +105,8 @@ class Game:
 
     def init_piles(self):
         # Init Draw Pile
-        self._draw_pile = self.deck.copy()           # Copy deck into Draw Pile
-        random.shuffle(self._draw_pile)              # Shuffle Draw Pile
+        self._draw_pile = self.deck.copy()  # Copy deck into Draw Pile
+        random.shuffle(self._draw_pile)  # Shuffle Draw Pile
 
         # Init Tableau Pile
         for pile_index in range(len(self._tableau_pile)):
@@ -129,13 +128,13 @@ class Game:
 
     def check_valid_tableau_to_tableau(self, origin_pile_number, destination_pile_number, origin_card_y):
         # Check if destination pile is empty and origin card is not 'King'.
-        if (len(self._tableau_pile[destination_pile_number]) == 0) and\
+        if (len(self._tableau_pile[destination_pile_number]) == 0) and \
                 (self._tableau_pile[origin_pile_number][origin_card_y].get_number() != 13):
             return False
 
         # Check if 'King' card is moving to an empty space
-        if (self._tableau_pile[origin_pile_number][origin_card_y].get_number() == 13)\
-                and (len(self._tableau_pile[destination_pile_number]) == 0)\
+        if (self._tableau_pile[origin_pile_number][origin_card_y].get_number() == 13) \
+                and (len(self._tableau_pile[destination_pile_number]) == 0) \
                 and (self._tableau_pile[origin_pile_number][origin_card_y].get_reveled_state() is True):
             return True
 
@@ -144,12 +143,12 @@ class Game:
             return False
 
         # Check colour is different
-        if self._tableau_pile[origin_pile_number][origin_card_y].get_color() ==\
+        if self._tableau_pile[origin_pile_number][origin_card_y].get_color() == \
                 self._tableau_pile[destination_pile_number][-1].get_color():
             return False
 
         # Check number destination card is consecutive and greater than last origin card moved
-        if (self._tableau_pile[origin_pile_number][origin_card_y].get_number() + 1) !=\
+        if (self._tableau_pile[origin_pile_number][origin_card_y].get_number() + 1) != \
                 self._tableau_pile[destination_pile_number][-1].get_number():
             return False
 
@@ -182,7 +181,7 @@ class Game:
 
     def check_valid_tableau_to_goal(self, origin_pile_number, destination_pile_number):
         # Check if Goal Pile is emtpy and card is 'Ace'
-        if (len(self._goal_pile[destination_pile_number]) == 0) and\
+        if (len(self._goal_pile[destination_pile_number]) == 0) and \
                 (self._tableau_pile[origin_pile_number][-1].get_number() == 1):
             return True
 
@@ -192,18 +191,41 @@ class Game:
             return False
 
         # Check if movement card is valid. Check same suit
-        if self._goal_pile[destination_pile_number][-1].get_suit() !=\
+        if self._goal_pile[destination_pile_number][-1].get_suit() != \
                 self._tableau_pile[origin_pile_number][-1].get_suit():
             return False
 
         # Check if movement is valid. Consecutive numbers
-        if (self._goal_pile[destination_pile_number][-1].get_number() + 1) !=\
+        if (self._goal_pile[destination_pile_number][-1].get_number() + 1) != \
                 self._tableau_pile[origin_pile_number][-1].get_number():
             return False
 
         return True
 
-    def move_card_tableau_to_tableau(self,  origin_pile_number, destination_pile_number, origin_card_y):
+    def check_valid_draw_to_goal(self, destination_pile_number):
+        # Check if Goal Pile is emtpy and card is 'Ace'
+        if (len(self._goal_pile[destination_pile_number]) == 0) and \
+                (self._draw_pile[-1].get_number() == 1):
+            return True
+
+        # Check if Goal Pile is emtpy and card is NOT 'Ace'
+        if (len(self._goal_pile[destination_pile_number]) == 0) and \
+                (self._draw_pile[-1].get_number() != 1):
+            return False
+
+        # Check if movement card is valid. Check same suit
+        if self._goal_pile[destination_pile_number][-1].get_suit() != \
+                self._draw_pile[-1].get_suit():
+            return False
+
+        # Check if movement is valid. Consecutive numbers
+        if (self._goal_pile[destination_pile_number][-1].get_number() + 1) != \
+                self._draw_pile[-1].get_number():
+            return False
+
+        return True
+
+    def move_card_tableau_to_tableau(self, origin_pile_number, destination_pile_number, origin_card_y):
         # Check if movement is valid
         if not self.check_valid_tableau_to_tableau(origin_pile_number, destination_pile_number, origin_card_y):
             return False
@@ -244,13 +266,29 @@ class Game:
         # Check if movement is valid
         if not self.check_valid_tableau_to_goal(origin_pile_number, destination_pile_number):
             return False
-        # Pop last card from origin Tableaus Pile
+        # Pop last card from origin Tableau Pile
         draw_card = self._tableau_pile[origin_pile_number].pop(-1)
         # Paste last card into the destination pile
         self._goal_pile[destination_pile_number].append(draw_card)
         # Update visible state from Draw Pile last card
         if len(self._tableau_pile[origin_pile_number]) > 0:
             self._tableau_pile[origin_pile_number][-1].set_card_visible()
+        # Increment num of movements
+        self.num_movements += 1
+
+        return True
+
+    def move_card_draw_to_goal(self, destination_pile_number):
+        # Check if movement is valid
+        if not self.check_valid_draw_to_goal(destination_pile_number):
+            return False
+        # Pop last card from origin Draw Pile
+        draw_card = self._draw_pile.pop(-1)
+        # Paste last card into the destination pile
+        self._goal_pile[destination_pile_number].append(draw_card)
+        # Update visible state from Draw Pile last card
+        if len(self._draw_pile) > 0:
+            self._draw_pile[-1].set_card_visible()
         # Increment num of movements
         self.num_movements += 1
 

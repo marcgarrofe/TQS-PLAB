@@ -200,8 +200,9 @@ class Controller:
 
                 # Apply movement from draw to goal
                 elif check_draw_position(origin_x, origin_y) and check_goal_position(destination_x, destination_y)[0]:
-                    # IMPLEMENTAR
-                    continue
+                    _, destination_pile = check_goal_position(destination_x, destination_y)
+
+                    result_ok = self.game.move_card_draw_to_goal(destination_pile)
 
                 # Apply movement from tableau to goal
                 elif check_tableau_position(origin_x, origin_y, self.game.get_tableau_pile())[0] and check_goal_position(destination_x, destination_y)[0]:
