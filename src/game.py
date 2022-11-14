@@ -88,9 +88,6 @@ class Game:
 
         self.num_movements = 0          # Init score num of movements
 
-    def __deepcopy__(self, memodict={}):
-        return Game(game=self)
-
     def __eq__(self, other):
         if not isinstance(other, Game):
             return False

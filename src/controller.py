@@ -67,16 +67,20 @@ def check_tableau_position(x, y, tableau):
 
 
 class Controller:
-    def __init__(self):
-        self.db = DataBase()                # Init Model DB
+    def __init__(self, init_vista=True, mock_model_game=None):
+        if mock_model_game:
+            self.db = mock_model_game
+        else:
+            self.db = DataBase()                # Init Model DB
         self.db_game = DataBase(data_base_type='game', data_base_path="../data/game.json")       # Init Model Game DB
-        self.gui = Vista(self)              # Init Vista GUI
         self.window = None                  # Declare Window type
         self.game = Game()                  # Declare Game
         self.mouse = mouse.Controller()     # Declare mouse controller
         self.mouse_state_pressed = None
         self.mouse_state_released = None
-        self.call_menu()                    # Launch menu
+        if init_vista:
+            self.gui = Vista(self)          # Init Vista GUI
+            self.call_menu()                # Launch menu
 
     def call_menu(self):
         self.gui.clear_frame()              # Clear GUI frame
@@ -93,7 +97,13 @@ class Controller:
 
     def call_game(self):
         self.gui.clear_frame()              # Clear GUI frame
-        #self.gui.test_display_card_deck(self.game)   # Call GUI Game
+        self.gui.game_refresh(game=self.game)
+        self.window = 'game'
+        self.run_game()
+
+    def reset_game(self):
+        self.gui.clear_frame()              # Clear GUI frame
+        self.game = Game()
         self.gui.game_refresh(game=self.game)
         self.window = 'game'
         self.run_game()
@@ -138,6 +148,9 @@ class Controller:
         listener = mouse.Listener(on_click=self.on_click)
         listener.start()
 
+        self.mouse_state_released = None
+        self.mouse_state_pressed = None
+
         while True:
             # If the mouse has been released, apply game changes
             if self.mouse_state_released:
@@ -145,6 +158,8 @@ class Controller:
 
                 # Sanity check
                 if not self.mouse_state_pressed and not self.mouse_state_pressed:
+                    self.mouse_state_released = None
+                    self.mouse_state_pressed = None
                     continue
 
                 origin_x = self.mouse_state_pressed['x'] - win_x
@@ -152,6 +167,9 @@ class Controller:
 
                 destination_x = self.mouse_state_released['x'] - win_x
                 destination_y = self.mouse_state_released['y'] - win_y
+
+                print(win_x, win_y)
+                print(destination_x, destination_y)
 
                 result_ok = False
                 # Goal Pile is never origin
@@ -199,6 +217,10 @@ class Controller:
                 # If Save Game is pressed, call Model Save game function
                 elif 850 < destination_x < 960 and 60 < destination_y < 80:
                     self.save_game()
+
+                # If Reset game is pressed, reset all Game params
+                elif 850 < destination_x < 960 and 10 < destination_y < 30:
+                    self.reset_game()
 
                 if result_ok:
                     print("Card moved")

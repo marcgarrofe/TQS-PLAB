@@ -135,12 +135,19 @@ class TestDataBase(unittest.TestCase):
 
 class MockDataBaseScore(DataBase):
     def __init__(self):
-        self._db_path = '../data/score.json'
         self._db_type = 'Score'
-        self._db_dict = [{
+
+    def get_db(self):
+        return [{
             "name": "Biel",
             "score": 150
         }, {
             "name": "Marc",
             "score": 10
         }]
+
+
+class MockDataBaseGame(DataBase):
+    def __init__(self):
+        self._db_type = 'Game'
+

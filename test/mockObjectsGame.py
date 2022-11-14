@@ -59,7 +59,7 @@ tableau_pile = [[], [],
                 [Card('spades', 1, visible=True)],
                 [Card('clubs', 2, visible=True)],
                 [], [], []]
-test_game_4 = Game(draw_pile=[],
+test_game_4 = Game(draw_pile=[Card('clubs', 3, visible=True)],
                    goal_pile=[[Card('diamonds', 1, visible=True)], [Card('clubs', 1, visible=True)], [], []],
                    tableau_pile=tableau_pile)
 

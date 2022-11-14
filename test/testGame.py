@@ -1,7 +1,7 @@
 import unittest
 from src.game import Game
 from src.game import Card
-from src.game import game_to_dict
+from src.game import game_to_dict, dict_to_game
 from test.mockObjectsGame import mock_game_list
 import copy
 
@@ -408,3 +408,51 @@ class TestGameToJson(unittest.TestCase):
             'tableau_pile': []
         }
         self.assertEqual(result_dict_2, expected_dict_2)
+
+
+class DictToJson(unittest.TestCase):
+    def test_dict_to_game(self):
+        """
+        Black-box test
+        Test Json Dict to Game converter function
+        """
+        with self.assertRaisesRegex(TypeError, "Param game must be Dict Type"):
+            _ = dict_to_game(int(0))
+        with self.assertRaisesRegex(TypeError, "Param game must be Dict Type"):
+            _ = dict_to_game(Game())
+
+        game_dict = {
+            'tableau_pile': [[], [],
+                             [{'suit': 'spades', 'number': 1, 'reveled_state': True}],
+                             [{'suit': 'clubs', 'number': 2, 'reveled_state': True}],
+                             [], [], []],
+            'goal_pile': [[{'suit': 'diamonds', 'number': 1, 'reveled_state': True}],
+                          [{'suit': 'clubs', 'number': 1, 'reveled_state': True}], [], []],
+            'draw_pile': [{'suit': 'clubs', 'number': 3, 'reveled_state': True}]
+        }
+        result_game = dict_to_game(game_dict)
+        expected_game = Game(game=mock_game_list[4])
+        self.assertEqual(result_game, expected_game)
+
+        # Delete Tableau pile from dict
+        del game_dict['tableau_pile']
+        with self.assertRaisesRegex(ValueError, 'Tableau Pile not in dictionary'):
+            _ = dict_to_game(game_dict)
+        # Delete Goal pile from dict
+        del game_dict['goal_pile']
+        with self.assertRaisesRegex(ValueError, 'Goal Pile not in dictionary'):
+            _ = dict_to_game(game_dict)
+        # Delete Draw pile from dict
+        del game_dict['draw_pile']
+        with self.assertRaisesRegex(ValueError, 'Draw Pile not in dictionary'):
+            _ = dict_to_game(game_dict)
+
+
+
+
+
+
+
+
+
+
