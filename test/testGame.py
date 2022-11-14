@@ -195,6 +195,32 @@ class TestGame(unittest.TestCase):
         # Move '1 of spades' to an empty space
         self.assertTrue(game.check_valid_tableau_to_goal(2, 2))
 
+    def test_check_valid_draw_to_goal(self):
+        """
+        Black-box test
+        Test Game Class Tableau to Goal function
+        """
+        game = Game(game=mock_game_list[5])
+        # Move '2 of diamonds' to '1 of diamonds'
+        self.assertTrue(game.check_valid_draw_to_goal(0))
+        # Move '2 of diamonds' to an empty pile
+        self.assertFalse(game.check_valid_draw_to_goal(2))
+        # Move '2 of diamonds' to '1 of clubs'
+        self.assertFalse(game.check_valid_draw_to_goal(1))
+
+        game = Game(game=mock_game_list[6])
+        # Move '1 of diamonds' to first empty column
+        self.assertTrue(game.check_valid_draw_to_goal(0))
+        # Move '1 of diamonds' to last empty column
+        self.assertTrue(game.check_valid_draw_to_goal(3))
+        # Move '1 of diamonds' to an occupied pile
+        self.assertFalse(game.check_valid_draw_to_goal(1))
+
+        game = Game(game=mock_game_list[7])
+        # Move '3 of diamonds' to '1 of diamonds'
+        self.assertFalse(game.check_valid_draw_to_goal(0))
+
+
     def test_move_card_tableau_to_tableau(self):
         """
         White-box test
@@ -354,6 +380,30 @@ class TestGame(unittest.TestCase):
                           [Card('spades', 1, visible=True)],
                           [Card('hearts', 3, visible=True)],
                           [], [], []])
+
+    def test_move_card_draw_to_goal(self):
+        """
+        White-box test
+        Test Game Class Draw pile function
+        """
+        game = Game(game=mock_game_list[5])
+        # Move '2 of diamonds' to an empty pile
+        self.assertFalse(game.move_card_draw_to_goal(2))
+        # Move '2 of diamonds' to '1 of diamonds'
+        self.assertTrue(game.move_card_draw_to_goal(0))
+        # Check Full Goal pile
+        self.assertEqual(game.get_goal_pile(),
+                         [[Card('diamonds', 1, visible=True),
+                           Card('diamonds', 2, visible=True)],
+                          [Card('clubs', 1, visible=True)], [], []])
+
+        game = Game(game=mock_game_list[8])
+        self.assertTrue(game.move_card_draw_to_goal(0))
+        self.assertEqual(game.get_goal_pile(),
+                         [[Card('diamonds', 1, visible=True),
+                           Card('diamonds', 2, visible=True)],
+                          [], [], []])
+
 
     def test_new_draw_card(self):
         """
