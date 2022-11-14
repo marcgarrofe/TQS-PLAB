@@ -183,7 +183,8 @@ class Vista:
         restart_game_button = tk.Button(self.gui, text="Restart Game", fg='red', bg='black', font=("Arial", 15))
         restart_game_button.place(x=850, y=10)
 
-        save_button = tk.Button(self.gui, text="Save Game", fg='red', bg='black', font=("Arial", 15))
+        save_button = tk.Button(self.gui, text="Save Game", fg='red', bg='black', font=("Arial", 15),
+                                command=self.controller.save_game())
         save_button.place(x=850, y=60)
 
         back_to_menu_button = tk.Button(self.gui, text="Back to Menu", fg='red', bg='black', font=("Arial", 15),

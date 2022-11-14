@@ -6,6 +6,10 @@ from test.mockObjectsGame import mock_game_list
 
 class TestCheckDrawPosition(unittest.TestCase):
     def test_border_position(self):
+        """
+        Black-box test
+        Test border and limit values
+        """
         self.assertTrue(check_draw_position(CARD_POSITION['draw_pile']['x'], CARD_POSITION['draw_pile']['y']))
 
         self.assertTrue(check_draw_position(CARD_POSITION['draw_pile']['x'],
@@ -27,11 +31,18 @@ class TestCheckDrawPosition(unittest.TestCase):
                                              CARD_POSITION['draw_pile']['y'] + CARD_POSITION['card_px']['y'] + 10))
 
     def test_position(self):
+        """
+        Black-box test
+        """
         self.assertTrue(check_draw_position(CARD_POSITION['draw_pile']['x'] + 10, CARD_POSITION['draw_pile']['y'] + 10))
 
 
 class TestCheckTableauPosition(unittest.TestCase):
     def test_border_position(self):
+        """
+        Black-box test
+        Test border and limit values
+        """
         game = mock_game_list[0]
         self.assertEqual(check_tableau_position(x=CARD_POSITION['tableau_pile']['x'],
                                                 y=CARD_POSITION['tableau_pile']['y'],
@@ -65,6 +76,10 @@ class TestCheckTableauPosition(unittest.TestCase):
 
 class TestCheckGoalPosition(unittest.TestCase):
     def test_border_position(self):
+        """
+        Black-box test
+        Test border and limit values
+        """
         self.assertEqual(check_goal_position(x=CARD_POSITION['goal_pile']['x'],
                                              y=CARD_POSITION['goal_pile']['y']), [True, 0])
 

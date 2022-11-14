@@ -9,6 +9,10 @@ DIRNAME = os.path.dirname(__file__)
 
 class TestDataBase(unittest.TestCase):
     def test_init(self):
+        """
+        White-box test
+        Test Model Class init
+        """
         db = DataBase(data_base_path="test")
         self.assertNotEqual(db.get_db_path(), "")
         empty_db = []
@@ -32,6 +36,10 @@ class TestDataBase(unittest.TestCase):
             _ = DataBase(data_base_type='score_')
 
     def test_add_score(self):
+        """
+        Black-box test
+        Test Model Class add score function
+        """
         # Delete file if exists
         rel_db_path = "../data/test_add_score.json"
         abs_db_path = os.path.join(DIRNAME, rel_db_path)
@@ -62,6 +70,10 @@ class TestDataBase(unittest.TestCase):
             db.add_score(player="Biel", score=150)
 
     def test_save_game(self):
+        """
+        Black-box test
+        Test Model Class save game function
+        """
         # Define empty game
         game = Game(draw_pile=list(), goal_pile=list(), tableau_pile=list())
         db_score = DataBase(data_base_type='score')

@@ -193,11 +193,11 @@ class Controller:
                     result_ok = self.game.move_card_tableau_to_goal(origin_pile, destination_pile)
 
                 # If Back To Menu is pressed, break the loop
-                elif 880 < destination_x < 990 and 10 < destination_y < 30:
+                elif 850 < destination_x < 960 and 525 < destination_y < 545:
                     break
 
                 # If Save Game is pressed, call Model Save game function
-                elif 880 < destination_x < 990 and 40 < destination_y < 60:
+                elif 850 < destination_x < 960 and 60 < destination_y < 80:
                     self.save_game()
 
                 if result_ok:

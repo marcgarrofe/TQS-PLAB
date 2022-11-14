@@ -8,6 +8,10 @@ import copy
 
 class TestCard(unittest.TestCase):
     def test_init(self):
+        """
+        White-box test
+        Test Card Class init
+        """
         card = Card('spades', 1)
         self.assertEqual(card.get_suit(), 'spades')
         self.assertEqual(card.get_number(), 1)
@@ -27,6 +31,10 @@ class TestCard(unittest.TestCase):
             _ = Card('spades', 'test')
 
     def test_equal(self):
+        """
+        Black-box test
+        Test Card Class equal operator
+        """
         card_1 = Card('spades', 1)
         card_1_copy = Card('spades', 1)
         self.assertEqual(card_1, card_1_copy)
@@ -43,6 +51,10 @@ class TestCard(unittest.TestCase):
         self.assertNotEqual(card_1_red, card_1)
 
     def test_get_json_card(self):
+        """
+        Black-box test
+        Test Card Class json-dict converter function
+        """
         card_1 = Card('spades', 1)
         self.assertEqual(card_1.get_dict_card(), {'suit': 'spades',
                                                   'number': 1,
@@ -55,6 +67,10 @@ class TestCard(unittest.TestCase):
 
 class TestGame(unittest.TestCase):
     def test_default_init(self):
+        """
+        White-box test
+        Test Game Class init
+        """
         game = Game()
 
         tableau_pile = game.get_tableau_pile()
@@ -77,6 +93,10 @@ class TestGame(unittest.TestCase):
         self.assertEqual(goal_pile_total_cars, 0)       # Check number of Cards in the Goal Pile
 
     def test_parameters_init(self):
+        """
+        White-box test
+        Test Game Class init
+        """
         draw_pile = [Card('spades', 13), Card('clubs', 1)]
         goal_pile = [[Card('diamonds', 1, visible=True)], [Card('hearts', 1, visible=True)], [], []]
         tableau_pile = [[Card('diamonds', 7, visible=True)],
@@ -90,6 +110,10 @@ class TestGame(unittest.TestCase):
         self.assertEqual(game.get_tableau_pile(), tableau_pile)
 
     def test_copy_init(self):
+        """
+        White-box test
+        Test Game Class init
+        """
         game = Game(game=mock_game_list[0])
         self.assertEqual(game, mock_game_list[0])
         self.assertNotEqual(game, mock_game_list[1])        # Test Draw Pile
@@ -105,6 +129,10 @@ class TestGame(unittest.TestCase):
         self.assertNotEqual(game_3, game_4)                 # Test Tableau Pile
 
     def test_check_valid_tableau_to_tableau(self):
+        """
+        Black-box test
+        Test Game Class Tableau to Tableau function
+        """
         game = Game(game=mock_game_list[0])
         # Move '9 of diamonds' to '10 of spades'
         self.assertTrue(game.check_valid_tableau_to_tableau(3, 2, -1))
@@ -124,6 +152,10 @@ class TestGame(unittest.TestCase):
         self.assertFalse(game.check_valid_tableau_to_tableau(4, 1, 0))
 
     def test_check_valid_draw_to_tableau(self):
+        """
+        Black-box test
+        Test Game Class Draw Pile to Tableau function
+        """
         game = Game(game=mock_game_list[0])
         # Move '13 of hearts' to an empty space
         self.assertTrue(game.check_valid_draw_to_tableau(6))
@@ -145,6 +177,10 @@ class TestGame(unittest.TestCase):
         self.assertFalse(game.check_valid_draw_to_tableau(0))
 
     def test_check_valid_tableau_to_goal(self):
+        """
+        Black-box test
+        Test Game Class Tableau to Goal function
+        """
         game = Game(game=mock_game_list[2])
         # Move '2 of diamonds' to '1 of diamonds'
         self.assertTrue(game.check_valid_tableau_to_goal(0, 0))
@@ -158,6 +194,10 @@ class TestGame(unittest.TestCase):
         self.assertTrue(game.check_valid_tableau_to_goal(2, 2))
 
     def test_move_card_tableau_to_tableau(self):
+        """
+        White-box test
+        Test Game Class Tableau to Tableau function
+        """
         # Move '9 of diamonds' to '10 of spades'
         game = Game(game=mock_game_list[0])
         self.assertTrue(game.move_card_tableau_to_tableau(3, 2, -1))
@@ -210,6 +250,10 @@ class TestGame(unittest.TestCase):
         self.assertEqual(game.get_tableau_pile()[5], [])
 
     def test_move_card_draw_to_tableau(self):
+        """
+        White-box test
+        Test Game Class Draw to Tableau function
+        """
         # Move '13 of hearts' to an empty space
         game = Game(game=mock_game_list[0])
         self.assertTrue(game.move_card_draw_to_tableau(6))
@@ -249,6 +293,10 @@ class TestGame(unittest.TestCase):
         self.assertFalse(game.move_card_draw_to_tableau(6))
 
     def test_move_card_tableau_to_goal(self):
+        """
+        White-box test
+        Test Game Class Tableau to Goal function
+        """
         # Move '2 of diamonds' to '1 of diamonds'
         game = Game(game=mock_game_list[2])
         self.assertTrue(game.move_card_tableau_to_goal(0, 0))
@@ -306,6 +354,10 @@ class TestGame(unittest.TestCase):
                           [], [], []])
 
     def test_new_draw_card(self):
+        """
+        White-box test
+        Test Game Class Draw pile function
+        """
         game = Game(draw_pile=[], goal_pile=[], tableau_pile=[])
         self.assertFalse(game.new_draw_card())              # Check no more cards on Draw Pile
 
@@ -318,6 +370,10 @@ class TestGame(unittest.TestCase):
 
 class TestGameToJson(unittest.TestCase):
     def test_game_to_dict(self):
+        """
+        Black-box test
+        Test Game to Json converter function
+        """
         with self.assertRaisesRegex(TypeError, "Param game must be Class Game Type"):
             _ = game_to_dict(int(0))
 
