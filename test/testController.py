@@ -2,7 +2,6 @@ import unittest
 from src.controller import check_draw_position, check_tableau_position, check_goal_position, Controller
 from src.vista import CARD_POSITION
 from test.mockObjectsGame import mock_game_list
-from test.testModel import MockDataBaseScore
 
 
 class TestCheckDrawPosition(unittest.TestCase):
@@ -150,15 +149,3 @@ class TestCheckGoalPosition(unittest.TestCase):
 
         self.assertEqual(check_goal_position(x=CARD_POSITION['goal_pile']['x'] - 1,
                                              y=CARD_POSITION['goal_pile']['y'] - 1), [False, None])
-
-
-class TestInit(unittest.TestCase):
-    def test_init(self):
-        mock_db_score = MockDataBaseScore()
-        controller = Controller(init_vista=False, mock_model_game=mock_db_score)
-
-        pass
-
-    def test_add_score(self):
-        pass
-

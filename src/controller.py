@@ -2,6 +2,7 @@ from src.model import DataBase
 from src.vista import Vista, CARD_POSITION
 from src.game import Game, game_to_dict, dict_to_game
 from pynput import mouse
+from test.mockObjectsGame import mock_game_list
 
 WINDOWS = ['menu', 'ranking', 'game']
 
@@ -67,20 +68,16 @@ def check_tableau_position(x, y, tableau):
 
 
 class Controller:
-    def __init__(self, init_vista=True, mock_model_game=None):
-        if mock_model_game:
-            self.db = mock_model_game
-        else:
-            self.db = DataBase()                # Init Model DB
+    def __init__(self):
+        self.db = DataBase()                # Init Model DB
         self.db_game = DataBase(data_base_type='game', data_base_path="../data/game.json")       # Init Model Game DB
         self.window = None                  # Declare Window type
         self.game = Game()                  # Declare Game
         self.mouse = mouse.Controller()     # Declare mouse controller
         self.mouse_state_pressed = None
         self.mouse_state_released = None
-        if init_vista:
-            self.gui = Vista(self)          # Init Vista GUI
-            self.call_menu()                # Launch menu
+        self.gui = Vista(self)          # Init Vista GUI
+        self.call_menu()                # Launch menu
 
     def call_menu(self):
         self.gui.clear_frame()              # Clear GUI frame
@@ -111,6 +108,15 @@ class Controller:
     def load_game(self):
         saved_game_dict = self.db_game.get_db()
         self.game = dict_to_game(saved_game_dict)
+        if 'score' in saved_game_dict.keys():
+            self.game.num_movements = saved_game_dict['score']
+        else:
+            self.game.num_movements = 0
+        self.call_game()
+
+    def easy_game(self):
+        self.game = Game(mock_game_list[4])
+        self.call_game()
 
     def call_exit(self):
         self.gui.clear_frame()              # Clear GUI Frame
@@ -124,12 +130,14 @@ class Controller:
 
     def save_game(self):
         game_dict = game_to_dict(self.game)
-        self.db_game.save_game(game_dict)
+        self.db_game.save_game(game_dict, score=self.game.num_movements)
 
     def add_score(self):
         # Call Vista : Ask for players name
         # Call model add_Score()
-        pass
+        player = 'Pau'
+        score = 100
+        self.db.add_score(player=player, score=score)
 
     def on_click(self, x, y, button, pressed, verbose=False):
         if button == button.left:

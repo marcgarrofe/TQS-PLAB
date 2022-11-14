@@ -3,7 +3,6 @@ from src.game import Game
 from src.game import Card
 from src.game import game_to_dict, dict_to_game
 from test.mockObjectsGame import mock_game_list
-import copy
 
 
 class TestCard(unittest.TestCase):
@@ -132,6 +131,7 @@ class TestGame(unittest.TestCase):
         """
         Black-box test
         Test Game Class Tableau to Tableau function
+        Path coverage 100%. Decision coverage 100%
         """
         game = Game(game=mock_game_list[0])
         # Move '9 of diamonds' to '10 of spades'
@@ -155,6 +155,7 @@ class TestGame(unittest.TestCase):
         """
         Black-box test
         Test Game Class Draw Pile to Tableau function
+        Path coverage 100%. Decision coverage 100%
         """
         game = Game(game=mock_game_list[0])
         # Move '13 of hearts' to an empty space
@@ -180,6 +181,7 @@ class TestGame(unittest.TestCase):
         """
         Black-box test
         Test Game Class Tableau to Goal function
+        Path coverage 100%. Decision coverage 100%
         """
         game = Game(game=mock_game_list[2])
         # Move '2 of diamonds' to '1 of diamonds'

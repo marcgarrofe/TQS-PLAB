@@ -110,6 +110,10 @@ class TestDataBase(unittest.TestCase):
         ])
 
         # Test Error Values
+        with self.assertRaisesRegex(TypeError, 'Score must be integer'):
+            db_game.save_game(game_dict_2, score='1')
+        with self.assertRaisesRegex(ValueError, 'Score must be positive integer'):
+            db_game.save_game(game_dict_2, score=-1)
         # Drop Tableau Key in Dict
         del game_dict_2['tableau_pile']
         with self.assertRaisesRegex(ValueError, 'Tableau Pile not in dictionary'):
@@ -131,23 +135,3 @@ class TestDataBase(unittest.TestCase):
     def test_load_db(self):
         db = DataBase()
         # Acabar
-
-
-class MockDataBaseScore(DataBase):
-    def __init__(self):
-        self._db_type = 'Score'
-
-    def get_db(self):
-        return [{
-            "name": "Biel",
-            "score": 150
-        }, {
-            "name": "Marc",
-            "score": 10
-        }]
-
-
-class MockDataBaseGame(DataBase):
-    def __init__(self):
-        self._db_type = 'Game'
-

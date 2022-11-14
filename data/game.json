@@ -1,287 +1,47 @@
 {
- "draw_pile": [
-  {
-   "suit": "hearts",
-   "number": 12,
-   "reveled_state": false
-  },
-  {
-   "suit": "diamonds",
-   "number": 1,
-   "reveled_state": false
-  },
-  {
-   "suit": "diamonds",
-   "number": 13,
-   "reveled_state": false
-  },
-  {
-   "suit": "spades",
-   "number": 4,
-   "reveled_state": false
-  },
-  {
-   "suit": "hearts",
-   "number": 2,
-   "reveled_state": false
-  },
-  {
-   "suit": "diamonds",
-   "number": 4,
-   "reveled_state": false
-  },
-  {
-   "suit": "hearts",
-   "number": 10,
-   "reveled_state": false
-  },
-  {
-   "suit": "hearts",
-   "number": 3,
-   "reveled_state": false
-  },
-  {
-   "suit": "clubs",
-   "number": 7,
-   "reveled_state": false
-  },
-  {
-   "suit": "hearts",
-   "number": 5,
-   "reveled_state": false
-  },
-  {
-   "suit": "spades",
-   "number": 9,
-   "reveled_state": false
-  },
-  {
-   "suit": "spades",
-   "number": 11,
-   "reveled_state": false
-  },
-  {
-   "suit": "spades",
-   "number": 12,
-   "reveled_state": false
-  },
-  {
-   "suit": "diamonds",
-   "number": 11,
-   "reveled_state": false
-  },
-  {
-   "suit": "clubs",
-   "number": 9,
-   "reveled_state": false
-  },
-  {
-   "suit": "clubs",
-   "number": 1,
-   "reveled_state": false
-  },
-  {
-   "suit": "spades",
-   "number": 8,
-   "reveled_state": false
-  },
-  {
-   "suit": "clubs",
-   "number": 2,
-   "reveled_state": false
-  },
-  {
-   "suit": "spades",
-   "number": 10,
-   "reveled_state": false
-  },
-  {
-   "suit": "clubs",
-   "number": 12,
-   "reveled_state": false
-  },
-  {
-   "suit": "diamonds",
-   "number": 6,
-   "reveled_state": false
-  },
-  {
-   "suit": "clubs",
-   "number": 6,
-   "reveled_state": false
-  },
-  {
-   "suit": "diamonds",
-   "number": 8,
-   "reveled_state": true
-  }
- ],
+ "draw_pile": [],
  "goal_pile": [
-  [],
-  [],
+  [
+   {
+    "suit": "diamonds",
+    "number": 1,
+    "reveled_state": true
+   }
+  ],
+  [
+   {
+    "suit": "clubs",
+    "number": 1,
+    "reveled_state": true
+   },
+   {
+    "suit": "clubs",
+    "number": 2,
+    "reveled_state": true
+   },
+   {
+    "suit": "clubs",
+    "number": 3,
+    "reveled_state": true
+   }
+  ],
   [],
   [
    {
-    "suit": "hearts",
+    "suit": "spades",
     "number": 1,
-    "reveled_state": false
+    "reveled_state": true
    }
   ]
  ],
  "tableau_pile": [
-  [
-   {
-    "suit": "clubs",
-    "number": 10,
-    "reveled_state": true
-   }
-  ],
-  [
-   {
-    "suit": "hearts",
-    "number": 4,
-    "reveled_state": false
-   },
-   {
-    "suit": "hearts",
-    "number": 8,
-    "reveled_state": true
-   }
-  ],
-  [
-   {
-    "suit": "clubs",
-    "number": 11,
-    "reveled_state": false
-   },
-   {
-    "suit": "clubs",
-    "number": 3,
-    "reveled_state": false
-   },
-   {
-    "suit": "diamonds",
-    "number": 9,
-    "reveled_state": true
-   }
-  ],
-  [
-   {
-    "suit": "hearts",
-    "number": 9,
-    "reveled_state": false
-   },
-   {
-    "suit": "diamonds",
-    "number": 10,
-    "reveled_state": false
-   },
-   {
-    "suit": "clubs",
-    "number": 8,
-    "reveled_state": false
-   },
-   {
-    "suit": "spades",
-    "number": 2,
-    "reveled_state": true
-   }
-  ],
-  [
-   {
-    "suit": "clubs",
-    "number": 5,
-    "reveled_state": false
-   },
-   {
-    "suit": "spades",
-    "number": 1,
-    "reveled_state": false
-   },
-   {
-    "suit": "spades",
-    "number": 13,
-    "reveled_state": false
-   },
-   {
-    "suit": "spades",
-    "number": 7,
-    "reveled_state": false
-   },
-   {
-    "suit": "hearts",
-    "number": 13,
-    "reveled_state": true
-   }
-  ],
-  [
-   {
-    "suit": "clubs",
-    "number": 13,
-    "reveled_state": false
-   },
-   {
-    "suit": "diamonds",
-    "number": 12,
-    "reveled_state": false
-   },
-   {
-    "suit": "hearts",
-    "number": 7,
-    "reveled_state": false
-   },
-   {
-    "suit": "hearts",
-    "number": 11,
-    "reveled_state": false
-   },
-   {
-    "suit": "spades",
-    "number": 6,
-    "reveled_state": false
-   },
-   {
-    "suit": "diamonds",
-    "number": 5,
-    "reveled_state": true
-   }
-  ],
-  [
-   {
-    "suit": "hearts",
-    "number": 6,
-    "reveled_state": false
-   },
-   {
-    "suit": "diamonds",
-    "number": 2,
-    "reveled_state": false
-   },
-   {
-    "suit": "diamonds",
-    "number": 7,
-    "reveled_state": false
-   },
-   {
-    "suit": "diamonds",
-    "number": 3,
-    "reveled_state": false
-   },
-   {
-    "suit": "clubs",
-    "number": 4,
-    "reveled_state": false
-   },
-   {
-    "suit": "spades",
-    "number": 3,
-    "reveled_state": false
-   },
-   {
-    "suit": "spades",
-    "number": 5,
-    "reveled_state": true
-   }
-  ]
- ]
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  []
+ ],
+ "score": 3
 }

@@ -90,10 +90,12 @@ class Vista:
                                    command=self.controller.call_ranking)
         ranking_button.place(x=435, y=160)
 
-        easy_game_button = tk.Button(self.gui, text="Easy Game", fg='red', bg='black', font=("Arial", 25))
+        easy_game_button = tk.Button(self.gui, text="Easy Game", fg='red', bg='black', font=("Arial", 25),
+                                     command=self.controller.easy_game)
         easy_game_button.place(x=410, y=270)
 
-        load_button = tk.Button(self.gui, text="Load Game", fg='red', bg='black', font=("Arial", 25), command=self.controller.load_game)
+        load_button = tk.Button(self.gui, text="Load Game", fg='red', bg='black', font=("Arial", 25),
+                                command=self.controller.load_game)
         load_button.place(x=410, y=380)
 
         exit_button = tk.Button(self.gui, text="Exit", fg='red', bg='black', font=("Arial", 25),
@@ -184,10 +186,13 @@ class Vista:
         restart_game_button.place(x=850, y=10)
 
         save_button = tk.Button(self.gui, text="Save Game", fg='red', bg='black', font=("Arial", 15),
-                                command=self.controller.save_game())
+                                command=self.controller.save_game)
         save_button.place(x=850, y=60)
 
         back_to_menu_button = tk.Button(self.gui, text="Back to Menu", fg='red', bg='black', font=("Arial", 15),
                                         command=self.controller.call_menu)
         back_to_menu_button.pack()
         back_to_menu_button.place(x=850, y=525)
+
+        text = tk.Label(self.gui, text="Score: " + str(game.num_movements))
+        text.place(x=850, y=100)

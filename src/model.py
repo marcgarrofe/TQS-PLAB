@@ -40,7 +40,7 @@ class DataBase:
         self._db_dict.append(new_score)
         self.update_db()
 
-    def save_game(self, game_dict: dict):
+    def save_game(self, game_dict: dict, score=0):
         if self._db_type != 'game':
             raise TypeError('Only Game type DB can add new scores')
         if type(game_dict) != dict:
@@ -51,7 +51,12 @@ class DataBase:
             raise ValueError('Goal Pile not in dictionary')
         if 'tableau_pile' not in game_dict.keys():
             raise ValueError('Tableau Pile not in dictionary')
+        if type(score) != int:
+            raise TypeError('Score must be integer')
+        if score < 0:
+            raise ValueError('Score must be positive integer')
 
+        game_dict['score'] = score
         self._db_dict = game_dict
         self.update_db()
 
