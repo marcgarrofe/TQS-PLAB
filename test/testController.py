@@ -8,7 +8,7 @@ class TestCheckDrawPosition(unittest.TestCase):
     def test_border_position(self):
         """
         Black-box test
-        Test border and limit values
+        Test border  values
         """
         self.assertTrue(check_draw_position(CARD_POSITION['draw_pile']['x'], CARD_POSITION['draw_pile']['y']))
 
@@ -21,14 +21,21 @@ class TestCheckDrawPosition(unittest.TestCase):
         self.assertTrue(check_draw_position(CARD_POSITION['draw_pile']['x'] + CARD_POSITION['card_px']['x'],
                                             CARD_POSITION['draw_pile']['y'] + CARD_POSITION['card_px']['y']))
 
-        self.assertFalse(check_draw_position(CARD_POSITION['draw_pile']['x'] + CARD_POSITION['card_px']['x'] + 10,
-                                            CARD_POSITION['draw_pile']['y'] + CARD_POSITION['card_px']['y']))
+    def test_limit_position(self):
+        """
+        Black-box test
+        Test limit values
+        """
+        self.assertTrue(check_draw_position(CARD_POSITION['draw_pile']['x'] + 1, CARD_POSITION['draw_pile']['y'] + 1))
+
+        self.assertTrue(check_draw_position(CARD_POSITION['draw_pile']['x'] + 1,
+                                            CARD_POSITION['draw_pile']['y'] + CARD_POSITION['card_px']['y'] - 1))
+
+        self.assertFalse(check_draw_position(CARD_POSITION['draw_pile']['x'] + CARD_POSITION['card_px']['x'] + 1,
+                                            CARD_POSITION['draw_pile']['y']))
 
         self.assertFalse(check_draw_position(CARD_POSITION['draw_pile']['x'] + CARD_POSITION['card_px']['x'],
-                                             CARD_POSITION['draw_pile']['y'] + CARD_POSITION['card_px']['y'] + 10))
-
-        self.assertFalse(check_draw_position(CARD_POSITION['draw_pile']['x'] + CARD_POSITION['card_px']['x'] + 10,
-                                             CARD_POSITION['draw_pile']['y'] + CARD_POSITION['card_px']['y'] + 10))
+                                            CARD_POSITION['draw_pile']['y'] + CARD_POSITION['card_px']['y'] + 1))
 
     def test_position(self):
         """
@@ -36,12 +43,21 @@ class TestCheckDrawPosition(unittest.TestCase):
         """
         self.assertTrue(check_draw_position(CARD_POSITION['draw_pile']['x'] + 10, CARD_POSITION['draw_pile']['y'] + 10))
 
+        self.assertFalse(check_draw_position(CARD_POSITION['draw_pile']['x'] + CARD_POSITION['card_px']['x'] + 10,
+                                             CARD_POSITION['draw_pile']['y'] + CARD_POSITION['card_px']['y']))
+
+        self.assertFalse(check_draw_position(CARD_POSITION['draw_pile']['x'] + CARD_POSITION['card_px']['x'],
+                                             CARD_POSITION['draw_pile']['y'] + CARD_POSITION['card_px']['y'] + 10))
+
+        self.assertFalse(check_draw_position(CARD_POSITION['draw_pile']['x'] + CARD_POSITION['card_px']['x'] + 10,
+                                             CARD_POSITION['draw_pile']['y'] + CARD_POSITION['card_px']['y'] + 10))
+
 
 class TestCheckTableauPosition(unittest.TestCase):
     def test_border_position(self):
         """
         Black-box test
-        Test border and limit values
+        Test border values
         """
         game = mock_game_list[0]
         self.assertEqual(check_tableau_position(x=CARD_POSITION['tableau_pile']['x'],
@@ -66,6 +82,10 @@ class TestCheckTableauPosition(unittest.TestCase):
                                                 tableau=game.get_tableau_pile()), [True, 1, -1])
 
     def test_limit_position(self):
+        """
+        Black-box test
+        Test limit values
+        """
         game = mock_game_list[0]
         self.assertEqual(check_tableau_position(x=CARD_POSITION['tableau_pile']['x'] +
                                                   CARD_POSITION['tableau_pile']['x_margin'] +

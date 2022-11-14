@@ -30,7 +30,7 @@ CARD_POSITION = {
         "y_margin": 30
     },
     "goal_pile": {
-        "x": 5 + ((20 + int(CARD_SIZE_X / IMG_RATIO_RESIZE)) * 3),    # tableau[x] + ((tableau[x_margin] + card_px[x]) * 3)
+        "x": 5 + ((20 + int(CARD_SIZE_X / IMG_RATIO_RESIZE)) * 3),# tableau[x] + ((tableau[x_margin] + card_px[x]) * 3)
         "y": 10,
         "margin": 20
     }
@@ -108,8 +108,6 @@ class Vista:
             label_score = tk.Label(self.gui, text=score['score'], font=("Arial", 20))
             label_name.pack()
             label_score.pack()
-            # label_name = tk.Label(self.gui, text=score['name'], font=("Arial", 15)).grid(row=0, column=0)
-            # label_score = tk.Label(self.gui, text=score['score'], font=("Arial", 20)).grid(row=0, column=1)
 
         back_to_menu_button = tk.Button(self.gui, text="Back to Menu", fg='red', bg='black', font=("Arial", 25),
                                         command=self.controller.call_menu)
